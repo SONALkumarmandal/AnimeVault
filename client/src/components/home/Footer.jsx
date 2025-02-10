@@ -1,13 +1,15 @@
-import React from 'react'
+import React from 'react';
 
 function Footer() {
   return (
-    <div className='bg-zinc-900 h-48 flex justify-center items-center text-orange-700'>
+    <div className="bg-zinc-900 py-8 flex justify-center items-center text-orange-700">
       <div className="container mx-auto text-center">
         <p className="text-sm mb-4">
           © {new Date().getFullYear()} Sonal Kumar Mandal. All rights reserved.
         </p>
-        <ul className="flex justify-center space-x-6 text-sm">
+
+        {/* Links Section */}
+        <ul className="flex flex-wrap justify-center gap-6 text-sm">
           <li>
             <a
               href="/privacy"
@@ -35,7 +37,7 @@ function Footer() {
         </ul>
       </div>
     </div>
-  )
+  );
 }
 
-export default Footer
+export default Footer;

@@ -1,30 +1,37 @@
-import React from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
 function Header() {
-  const navigate=useNavigate()
-  const handleLogOut=()=>{
-    localStorage.clear("token")
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    localStorage.clear("token");
     navigate("/");
-  }
+  };
+
   return (
-    <div className='sticky top-0 w-full h-3/6 bg-zinc-900 flex justify-around'>
-       {/*logo*/}
+    <div className="sticky top-0 w-full bg-zinc-900 flex flex-wrap items-center justify-between p-4 shadow-md">
+      {/* Logo Section */}
+      <div className="w-1/3 md:w-1/6 flex justify-start">
+        <Link to={'/'}>
+          <img className="w-32 h-10" src="/src/assets/img/logovalt.png" alt="logo" />
+        </Link>
+      </div>
 
-        <div className='w-1/6 h-28 flex justify-center'>
-            <Link to={'/'}><img className='w-32 h-10 mt-8' src="/src/assets/img/logovalt.png" alt="logo" /></Link>
-         </div>
-
-        {/*navigation buttons*/}
-
-        <div className='w-5/6 flex justify-end gap-16 items-center mr-16'>
-            {/*buttons*/} 
-           {/*trending*/}      <div><button className='w-auto h-9 rounded-md text-base text-orange-700 font-extrabold flex'> <Link to={'/home'}>Trending</Link></button></div>
-           {/*highest rated*/} <div><button  className='w-auto h-9 rounded-md text-base text-orange-700 font-extrabold flex'><Link to={'/home/toprated'}>Highest Rated</Link></button></div>
-           <div><button className='w-auto h-9 rounded-md text-base text-orange-700 font-extrabold flex'><Link to={'/home/popular'}>Most Popular</Link></button></div>
-           <div><button onClick={handleLogOut} className='w-32 h-9 rounded-md text-base text-slate-300 font-extrabold flex text-center'><Link>Log Out</Link></button></div>
-        </div>
+      {/* Navigation Buttons */}
+      <div className="flex flex-wrap gap-4 md:gap-8 justify-end w-full md:w-auto mt-4 md:mt-0">
+        <Link to={'/home'} className="text-orange-700 font-extrabold hover:underline">Trending</Link>
+        <Link to={'/home/toprated'} className="text-orange-700 font-extrabold hover:underline">Highest Rated</Link>
+        <Link to={'/home/popular'} className="text-orange-700 font-extrabold hover:underline">Most Popular</Link>
+        <button
+          onClick={handleLogOut}
+          className="text-slate-300 font-extrabold hover:text-orange-500"
+        >
+          Log Out
+        </button>
+      </div>
     </div>
-  )
+  );
 }
 
-export default Header
+export default Header;

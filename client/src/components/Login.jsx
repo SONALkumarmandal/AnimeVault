@@ -12,7 +12,7 @@ const Login = () => {
     setisLoggedIn(true)
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/", {
+      const response = await fetch("https://anime-vault-gamma-rust.vercel.app/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +49,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full h-full bg-zinc-900 mt-4">
+    <div className="flex items-center justify-center w-full h-full bg-zinc-900 mt-4 sm:flex-col">
       <div className="w-full md:h-[65vh] max-w-md p-8 space-y-6 bg-zinc-800 rounded-xl">
         <h2 className="text-2xl font-bold text-center text-gray-100">Login</h2>
         <form onSubmit={loginAction} className="space-y-6">
