@@ -5,17 +5,11 @@ const app=express()
 const Dbconnect=require("./utils/dbConnection.js")
 const authRoute=require("./router/animeValt_Auth.js")
 const homeRoute = require("./router/animeValt_homepage.js")
-const corsOptions={
-    origin:(origin,callback)=>{
-        const allowedOrigins=[
-            "https://anime-vault-gold-seven.vercel.app/"
-        ];
-        const isAllowed=allowedOrigins.includes(origin);
-        callback(null,isAllowed?origin:false);
-    },
-    methods:"GET,POST,PUT,PATCH,DELETE",
-    credentials:true,
-}
+const corsOptions = {
+    origin: ["https://anime-vault-gold-seven.vercel.app"], // Directly allow this origin
+    methods: "GET,POST,PUT,PATCH,DELETE",
+    credentials: true,
+  };
 
 app.use(cors(corsOptions));
 app.use(express.json());
