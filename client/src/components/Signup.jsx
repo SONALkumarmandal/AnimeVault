@@ -19,7 +19,7 @@ const Signup = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://anime-vaultback.vercel.app/", {
+      const response = await fetch("https://anime-vaultback.vercel.app/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

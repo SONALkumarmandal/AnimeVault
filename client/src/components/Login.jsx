@@ -12,7 +12,7 @@ const Login = () => {
     setisLoggedIn(true)
     e.preventDefault();
     try {
-      const response = await fetch("https://anime-vaultback.vercel.app/", {
+      const response = await fetch("https://anime-vaultback.vercel.app", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
