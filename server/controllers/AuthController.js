@@ -2,11 +2,11 @@ const User=require("../models/userModel.js")
 
 
 const signUp=async (req,res,next)=>{
-    try {
+    try { 
+        const {name,email,password,userId} = req.body;
         
-        const {email,password,userId} = req.body;
 
-        if (!email || !password || !userId) {
+        if (!name || !email || !password || !userId) {
             return res.status(400).json({ message: "All fields are required." });
         }
 
@@ -14,12 +14,15 @@ const signUp=async (req,res,next)=>{
         if(UserExist){
             return res.status(400).json({message:"email already exist"});
         }
-
+            console.log(name,email,password,userId);
         const userCreated=await User.create({
+            name,
             email,
             password,
             userId
         });
+        console.log(userCreated);
+        
 
         res.status(201).json({
             msg:"registration successfull",
@@ -27,7 +30,10 @@ const signUp=async (req,res,next)=>{
             userId:userCreated._id.toString(),
         });
     } catch (error) {
-        // console.log(req.body);
+        console.log(error);
+        res.status(400).json({
+            status:"failed",
+            message:error})
         next(error);
     }
 };

@@ -3,9 +3,9 @@ const mongoose=require("mongoose")
 const Dbconnect=async()=>{
     try {
        await mongoose.connect(URL)
-    //    console.log("MongoDB Connected !")
+       console.log("MongoDB Connected !")
     } catch (error) {
-        // console.log("DataBase connection error !",error)
+        console.log("DataBase connection error !",error)
         process.exit(0)
     }
 }

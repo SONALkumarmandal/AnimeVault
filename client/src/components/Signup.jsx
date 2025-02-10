@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 const Signup = () => {
+  const navigate=useNavigate()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    userId: "",
   });
 
   const handleChange = (e) => {
@@ -13,14 +16,28 @@ const Signup = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
+    try {
+      const response = await fetch("http://localhost:3000/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const msg = await response.json();
+
+      if (msg.msg === "registration successfull") {
+        navigate("/");
+        alert("Sign-up successful!");
+      } else {
+        alert(msg || "Sign-up failed!");
+      }
+    } catch (error) {
+      alert("Error: Unable to connect to the server.");
     }
-    // Handle sign-up logic here
-    // console.log("Sign-Up Data:", formData);
   };
 
   return (
@@ -74,23 +91,23 @@ const Signup = () => {
             />
           </div>
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-white">
-              Confirm Password
+            <label htmlFor="userId" className="block text-sm font-medium text-white">
+              User ID
             </label>
             <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
+              type="text"
+              id="userId"
+              name="userId"
+              value={formData.userId}
               onChange={handleChange}
-              placeholder="Confirm your password"
+              placeholder="Enter your user ID"
               required
               className="w-full px-4 py-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
             />
           </div>
           <button
-            type="submit"
-            className="w-full px-4 py-2 text-white bg-black rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-1"
+            type="submit" onClick={handleSignUp}
+            className="w-full px-4 py-2 text-white bg-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-1"
           >
             Sign Up
           </button>

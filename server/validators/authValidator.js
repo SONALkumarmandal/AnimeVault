@@ -15,16 +15,18 @@ const loginSchema = z.object({
 });
 
 const signupSchema = loginSchema.extend({
+  name: z
+    .string({ required_error: "name is required" })
+    .min(2, { message: "name must be at least of 2 characters" })
+    .max(255, { message: "name must not be more than 255 characters" }),
+
     email: z
-      .string({ required_error: "email is required" })
-      .trim()
-      .min(5, { message: "email must be at lest of 3 chars. " })
-      .max(255, { message: "email must not be more than 255 characters" }),
+      .string({ required_error: "email is required" }).email(),
   
     password: z
       .string({ required_error: "password is required" })
       .trim()
-      .min(5, { message: "password must be at least of 10 characters" })
+      .min(5, { message: "password must be at least of 5 characters" })
       .max(20, { message: "password must not be more than 20 characters" }),
 
       userId: z

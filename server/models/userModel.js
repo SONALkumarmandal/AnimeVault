@@ -3,6 +3,10 @@ const bcryt=require("bcryptjs")
 const jwt=require("jsonwebtoken")
 const Secret_Key=process.env.SECRET_KEY
 const UserSchema =new mongoose.Schema({
+    name:{
+        type:String,
+        required:true
+    },
     email:{
         type:String,
         required:true
@@ -53,7 +57,7 @@ UserSchema.methods.generateToken=async function(){
         }
     )
     } catch (error) {
-        // console.log(error)
+        console.log(error)
     }
 }
 
