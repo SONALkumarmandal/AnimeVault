@@ -8,7 +8,7 @@ const homeRoute = require("./router/animeValt_homepage.js")
 const corsOptions={
     origin:(origin,callback)=>{
         const allowedOrigins=[
-            "https://anime-vault-b5rm.vercel.app"
+            "https://anime-vault-gold-seven.vercel.app/"
         ];
         const isAllowed=allowedOrigins.includes(origin);
         callback(null,isAllowed?origin:false);
