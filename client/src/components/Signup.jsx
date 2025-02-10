@@ -19,7 +19,7 @@ const Signup = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://server-jq7lcq4bp-sonalkumarmandals-projects.vercel.app/signup", {
+      const response = await fetch("https://server-zeta-rosy-13.vercel.app/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
