@@ -12,7 +12,7 @@ const Login = () => {
     setisLoggedIn(true)
     e.preventDefault();
     try {
-      const response = await fetch("https://anime-vault-gamma-rust.vercel.app", {
+      const response = await fetch("http://localhost:3000/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
