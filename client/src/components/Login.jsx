@@ -12,7 +12,7 @@ const Login = () => {
     setisLoggedIn(true)
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/", {
+      const response = await fetch("https://server-jq7lcq4bp-sonalkumarmandals-projects.vercel.app/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
