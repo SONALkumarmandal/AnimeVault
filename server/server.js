@@ -6,7 +6,7 @@ const Dbconnect=require("./utils/dbConnection.js")
 const authRoute=require("./router/animeValt_Auth.js")
 const homeRoute = require("./router/animeValt_homepage.js")
 const corsOptions = {
-    origin: ["https://anime-vault-gold-seven.vercel.app"], // Directly allow this origin
+    origin: "https://anime-vault-gold-seven.vercel.app", // Directly allow this origin
     methods: "GET,POST,PUT,PATCH,DELETE",
     credentials: true,
   };
