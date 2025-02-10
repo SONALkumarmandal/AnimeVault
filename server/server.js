@@ -13,6 +13,7 @@ const corsOptions = {
     'https://anime-vault-five-navy.vercel.app/' // Production
   ,
   methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+  allowedHeaders: "Content-Type,Authorization",
   credentials: true,
 };
 
