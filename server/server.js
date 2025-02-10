@@ -7,9 +7,7 @@ const authRoute=require("./router/animeValt_Auth.js")
 const homeRoute = require("./router/animeValt_homepage.js")
 const corsOptions={
     origin:(origin,callback)=>{
-        const allowedOrigins=[
-            "https://anime-vault-b5rm.vercel.app/"
-        ];
+        const allowedOrigins=["*"];
         const isAllowed=allowedOrigins.includes(origin);
         callback(null,isAllowed?origin:false);
     },
