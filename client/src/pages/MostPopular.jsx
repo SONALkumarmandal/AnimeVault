@@ -22,34 +22,22 @@ function MostPopular() {
       try {
         setLoading(true);
         const response = await axios.get("https://api.jikan.moe/v4/top/anime");
-        // console.log("API Response:", response.data);
-    
-        const animeList = response.data.data; // Array of anime
+        const animeList = response.data.data;
         setAllAnime(animeList);
     
-        // Adjust filtering logic based on available fields
         const trendings = animeList
-          .filter((anime) => {
-            // Use `status` or other field to filter currently airing shows
-            // console.log(`Checking anime: ${anime.title}, Status: ${anime.status}`);
-            return anime.favorites>=1;
-          })
-          .sort((a, b) => b.favorites - a.favorites) // Sort by score
-          .slice(0, 3); // Take top 3
+          .filter((anime) => anime.favorites >= 1)
+          .sort((a, b) => b.favorites - a.favorites)
+          .slice(0, 3);
     
-        // console.log("Filtered Trending Anime:", trendings);
         setTrending(trendings);
-        
-
 
         const topTens = animeList
         .sort((a, b) => a.popularity - b.popularity)
-        .slice(0, 10); // Take top 10
+        .slice(0, 10);
         setTopPopular(topTens);
-  
-      // console.log("Filtered Trending top 10 Anime:", topTens);
-      setTopPopular(topTens);
-        setLoading(false);
+      
+      setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
         setIsError(error.message);
@@ -57,12 +45,10 @@ function MostPopular() {
       }
     };
   
-    // Fetch data on component mount
     useEffect(() => {
       fetchData();
     }, []);
   
-    // Loading and Error Handling
     if (loading) {
       return <div className="flex justify-center items-center h-full w-full bg-black"><Loader/></div>;
     }
@@ -72,57 +58,46 @@ function MostPopular() {
     }
   
     return (
-      <div className="h-auto bg-zinc-800 text-white flex-col items-center justify-center">
-        {/* Top 3 Trending Anime */}
-        <div className="text-center mb-9 pt-9 text-4xl font-extrabold text-orange-700">
+      <div className="h-auto bg-zinc-800 text-white flex flex-col items-center justify-center p-4">
+        <div className="text-center mb-9 pt-9 text-3xl md:text-4xl font-extrabold text-orange-700">
           <h1>Top 3 Most Popular🔥</h1>
         </div>
-      <div className="flex justify-center items-center">
-        <ul className="flex items-center bg-zinc-800 h-full w-5/6 justify-around rounded-lg gap-2">
-    {Array.isArray(trending) && trending.length > 0 ? (
-      trending.map((item,ind) => (
-        <li className="flex justify-around w-full h-[70vh] align-middle p-6 gap-4 bg-zinc-900 rounded-xl text-nowrap" key={item.mal_id}><div>
-          <div className="font-medium text-5xl font-mono text-slate-300 mb-2"><i>{ind+1}</i></div>
-          <strong className="text-orange-700 h-1/3">{item.title_english===null?item.title:item.title_english}</strong> <br />  <p>popularity: {item.popularity}</p> <div>⭐ {item.score}</div>
-          <div className="flex justify-center h-full w-full mt-7"><a href={`${item.trailer.url}`}>
-          <img className="rounded-lg h-72 w-55 object-cover" src={`${item.images.webp.image_url}`} alt="" />
-          </a>
-          </div>
-        </div>
-        </li>
-      ))
-    ) : (
-      <li className="text-white font-bold">No trending anime available.</li>
-    )}
-  </ul> 
-      </div>
-       
-       <div className="h-auto w-full bg-zinc-800 flex justify-center items-center mt-40 text-center">
-            <div className="bg-zinc-900 w-5/6 h-auto rounded-lg mb-48 flex-col text-center ">
-            <div className="text-center mb-4 pt-10 text-4xl font-extrabold text-orange-700 w-full">
-          <h1>Top 10 Most Popular🔥</h1>
-        </div>
-            <ul className="w-full">
-            {Array.isArray(topPopular) && topPopular.length > 0 ? (
-           topPopular.map((item,ind) => (
-        <li className="flex w-full h-auto p-4 gap-4 bg-zinc-900 rounded-xl text-nowrap " key={item.mal_id}><div>
-          <div className="flex h-full w-full mt-8 p-8"><img className="rounded-lg h-72 w-auto object-cover" src={`${item.images.webp.image_url}`} alt="img" />
-            <strong className="text-orange-700 h-1/3 p-8 flex-col text-start text-wrap"><div className="font-medium text-5xl font-mono text-slate-300 "><i>{ind+1}</i></div>{item.title_english===null?item.title:item.title_english}
-            <div className="text-white text-start">Popularity: {item.popularity}</div>
-            <div className="text-white text-start text-wrap font-light">{item.synopsis}</div>
-            </strong>
-          </div>
-        </div>
-        </li>
-      ))
-    ) : (
-      <li className="text-white font-bold">No trending anime available.</li>
-    )}
-            </ul>
+        <div className="flex flex-wrap justify-center items-center gap-4 w-full max-w-6xl">
+          {trending.map((item, ind) => (
+            <div key={item.mal_id} className="flex flex-col md:flex-row items-center h-auto bg-zinc-900 p-4 rounded-xl w-full md:w-1/3">
+              <div className="text-center md:text-left p-6">
+                <div className="font-medium text-5xl font-mono text-slate-300 mb-2"><i>{ind+1}</i></div>
+                <strong className="text-orange-700">{item.title_english || item.title}</strong>
+                <p>Popularity: {item.popularity}</p>
+                <div>⭐ {item.score}</div>
+              </div>
+              <a href={item.trailer.url} className="mt-4 md:mt-0">
+                <img className="rounded-lg h-48 md:h-72 w-full object-cover" src={item.images.webp.image_url} alt="Anime" />
+              </a>
             </div>
+          ))}
+        </div>
+       
+        <div className="w-full max-w-6xl mt-16">
+          <div className="text-center mb-4 text-3xl md:text-4xl font-extrabold text-orange-700 ">
+            <h1>Top 10 Most Popular🔥</h1>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {topPopular.map((item, ind) => (
+              <div key={item.mal_id} className="flex flex-col md:flex-row md: items-center bg-zinc-900 p-4 rounded-xl">
+                <img className="rounded-lg h-auto md:h-auto w-1/3 md:w-1/2 object-cover pt-4" src={item.images.webp.image_url} alt="Anime" />
+                <div className="flex flex-col p-4 items-center md:items-start">
+                  <div className="font-medium text-3xl md:text-5xl font-mono text-slate-300"><i>{ind+1}</i></div>
+                  <strong className="text-orange-700">{item.title_english || item.title}</strong>
+                  <p className="text-white">Popularity: {item.popularity}</p>
+                  <p className="text-white text-sm md:text-base font-light">{item.synopsis}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>  
-    )
+    );
   }
 
-export default MostPopular
+export default MostPopular;
