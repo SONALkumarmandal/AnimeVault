@@ -8,7 +8,7 @@ const homeRoute = require("./router/animeValt_homepage.js");
 
 // Define allowed origins for development and production
 const corsOptions = {
-  origin: 'https://anime-vault-five-navy.vercel.app', // Corrected URL
+  origin: 'http://localhost:5173', // Corrected URL
   methods: "GET,POST,PUT,DELETE",
   credentials: true,
 };
