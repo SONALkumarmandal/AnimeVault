@@ -8,10 +8,10 @@ const homeRoute = require("./router/animeValt_homepage.js");
 
 // Define allowed origins for development and production
 const corsOptions = {
-  origin: 'https://anime-vault-frontend.vercel.app', // Corrected URL
+  origin: 'https://animevault-1.onrender.com', // Corrected URL
   methods: "GET,POST,PUT,DELETE",
   credentials: true,
-};
+};  
 
 
 app.use(cors(corsOptions)); // Enable CORS
