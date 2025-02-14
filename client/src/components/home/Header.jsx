@@ -14,7 +14,7 @@ function Header() {
       {/* Logo Section */}
       <div className="w-1/3 md:w-1/6 flex justify-start">
         <Link to={'/'}>
-          <img className="w-32 h-10" src="/public/img/logovalt.png" alt="logo" />
+          <img className="w-32 h-10" src="/img/logovalt.png" alt="logo" />
         </Link>
       </div>
 
