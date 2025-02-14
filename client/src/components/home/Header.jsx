@@ -1,122 +1,44 @@
-import React, { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [popupMessage, setPopupMessage] = useState(""); // For error popup
-  const [showPopup, setShowPopup] = useState(false); // Control popup visibility
-  const [isLoggedIn,setisLoggedIn]=useState(false)
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
+
+function Header() {
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const loginAction = async (e) => {
-    setisLoggedIn(true)
-    e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:3000/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
-
-      const msg = await response.json();
-      // console.log(msg)
-      if (msg.msg === "Login Successfull") {
-        localStorage.setItem("token",msg.token)
-        navigate("/home");
-      } 
-      
-      else if(msg.msg==="Login first"){
-        navigate("/");
-      } 
-      else {
-        setPopupMessage("Invalid email or password. Please try again.");
-        setShowPopup(true); // Show popup on error
-      }
-    } catch (error) {
-      // console.error("error", error);
-      setPopupMessage("Password should be more than 5 letters.");
-      setShowPopup(true); // Show popup on error
-    }
-  };
-
-  const handleClosePopup = () => {
-    setShowPopup(false); // Close popup
+  const handleLogOut = () => {
+    localStorage.clear("token");
+    navigate("/");
   };
 
   return (
-    <div className="flex items-center justify-center w-full h-full bg-zinc-900 mt-4 sm:flex-col">
-      <div className="w-full md:h-[65vh] max-w-md p-8 space-y-6 bg-zinc-800 rounded-xl">
-        <h2 className="text-2xl font-bold text-center text-gray-100">Login</h2>
-        <form onSubmit={loginAction} className="space-y-6">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-100"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              required
-              className="w-full px-4 py-2 mt-1 mb-6 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-100 mt-6"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              required
-              className="w-full px-4 py-2 mt-1 mb-8 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full px-4 py-2 mt-6 text-white bg-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-1"
-          >
-            Login
-          </button>
-        </form>
-        <p className="text-sm text-center text-gray-600">
-          Don't have an account?{" "}
-          <Link to={"/signup"} className="text-blue-500 hover:underline">
-            Sign up
-          </Link>
-        </p>
+    <div className="sticky top-0 w-full bg-zinc-900 flex flex-wrap items-center justify-between p-4 shadow-md">
+      {/* Logo Section */}
+      <div className="w-1/3 md:w-1/6 flex justify-start">
+        <Link to={'/'}>
+          <img className="w-32 h-10" src="/img/logovalt.png" alt="logo" />
+        </Link>
       </div>
+      
+      {/* Mobile Menu Button */}
+      <button className="md:hidden text-white" onClick={() => setMenuOpen(!menuOpen)}>
+        {menuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
 
-      {showPopup && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-          <div className="p-4 bg-white rounded shadow-lg text-center space-y-4">
-            <p className="text-black">{popupMessage}</p>
-            <button
-              onClick={handleClosePopup}
-              className="px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Navigation Buttons */}
+      <div className={`flex flex-col md:flex-row md:gap-8 w-full md:w-auto mt-4 md:mt-0 ${menuOpen ? 'flex' : 'hidden md:flex'}`}>
+        <Link to={'/home'} className="text-orange-700 font-extrabold hover:underline">Trending</Link>
+        <Link to={'/home/toprated'} className="text-orange-700 font-extrabold hover:underline">Highest Rated</Link>
+        <Link to={'/home/popular'} className="text-orange-700 font-extrabold hover:underline">Most Popular</Link>
+        <button
+          onClick={handleLogOut}
+          className="text-slate-300 font-extrabold hover:text-orange-500"
+        >
+          Log Out
+        </button>
+      </div>
     </div>
   );
-};
+}
 
-export default Login;
+export default Header;
