@@ -12,7 +12,7 @@ const Login = () => {
     setisLoggedIn(true)
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/", {
+      const response = await fetch("https://animevaultbackend.vercel.app", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
