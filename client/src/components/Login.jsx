@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import Loader from "./Loader";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [popupMessage, setPopupMessage] = useState(""); // For error popup
   const [showPopup, setShowPopup] = useState(false); // Control popup visibility
   const [isLoggedIn,setisLoggedIn]=useState(false)
+  const [loader,setLoader] = useState(false);
   const navigate = useNavigate();
 
   const loginAction = async (e) => {
+    setLoader(true);
     setisLoggedIn(true)
     e.preventDefault();
     try {
-      const response = await fetch("https://animevault-7gap.onrender.com", {
+      const response = await fetch("http://localhost:3000/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,10 +41,11 @@ const Login = () => {
         setShowPopup(true); // Show popup on error
       }
     } catch (error) {
-      // console.error("error", error);
-      setPopupMessage("Password should be more than 5 letters.");
+      console.error("error : ", error);
+      setPopupMessage("server error");
       setShowPopup(true); // Show popup on error
     }
+    setLoader(false)
   };
 
   const handleClosePopup = () => {
@@ -89,9 +93,8 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 mt-6 text-white bg-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-1"
-          >
-            Login
+            className="w-full h-12 px-4 py-2 mt-6 text-white bg-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-1"
+          >{(loader)?"Loading...":"Login"} 
           </button>
         </form>
         <p className="text-sm text-center text-gray-600">
